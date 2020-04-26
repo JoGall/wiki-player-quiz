@@ -29,13 +29,18 @@ fluidPage(titlePanel("Wikipedia Quiz"),
                         value = ""),
               verbatimTextOutput('guess_state'),
               # user guess state
-              actionButton("show_answer", "Show answer"),
+              # answer shown state
+              conditionalPanel(
+                condition = "output.guess_state == 1",
+                actionButton("show_answer", "Show answer")
+              ),
               # answer shown state
               conditionalPanel(
                 condition = "output.guess_state == 0",
-                h3(verbatimTextOutput('answer'))
+                h3(verbatimTextOutput('answer')),
+                verbatimTextOutput('answer_message'),
+                htmlOutput("full_infobox")
               ),
-              verbatimTextOutput('answer_message'),
               hr(),
               actionButton("new_question", "Another!")
             )

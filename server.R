@@ -33,7 +33,7 @@ shinyServer(function(input, output, session) {
             html.table.attributes="class='infobox vcard' style='width:22em;line-height: 1.2em'")
   })
   
-  # # show player name
+  # player name
   player_name <- reactive({
     player_career_table_html() %>%
       get_player_name()
@@ -62,6 +62,7 @@ shinyServer(function(input, output, session) {
     ifelse(user_answer %in% acceptable_answers, 1, 0)
   })
   
+  # answer message
   output$answer_message <- renderText({
    ifelse(user_answer_correct_status() == 0, "...", "CORRECT!")
   })
@@ -82,6 +83,12 @@ shinyServer(function(input, output, session) {
   
   output$guess_state <- renderText({
     values$guess_state
+  })
+  
+  # render full player infobox for post-answer
+  output$full_infobox <- renderText({
+    player_career_table_html() %>% 
+      paste(collapse = '\n')
   })
   
 })
